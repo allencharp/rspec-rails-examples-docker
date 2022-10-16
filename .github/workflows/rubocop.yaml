@@ -1,6 +1,6 @@
 name: Rubocop
 
-on: [pull]
+on: [push]
 jobs:
   rubocop:
     runs-on: ubuntu-latest
