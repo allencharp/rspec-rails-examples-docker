@@ -1,32 +1,16 @@
-name: "RuboCop"
+name: Rubocop
 
-on: [push]
-
+on: [pull_request]
 jobs:
   rubocop:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.0
-
-    # This step is not necessary if you add the gem to your Gemfile
-    - name: Install Code Scanning integration
-      run: bundle add code-scanning-rubocop --skip-install
-
-    - name: Install dependencies
-      run: bundle install
-
-    - name: RuboCop run
-      run: |
-        bash -c "
-          bundle exec rubocop --require code_scanning --format CodeScanning::SarifFormatter -o rubocop.sarif
-          [[ $? -ne 2 ]]
-        "
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Run rubocop
+        run: |
+          bundle exec rubocop
