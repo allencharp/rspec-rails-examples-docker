@@ -7,14 +7,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: prepare
-        run: |
-          bundle lock --add-platform x86_64-linux
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
           ruby-version: 3.1.2
+        
       - name: Run rubocop
         run: |
           bundle exec rubocop
+          bundle lock --add-platform x86_64-linux
