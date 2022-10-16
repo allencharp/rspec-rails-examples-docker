@@ -1,20 +1,17 @@
 name: Rubocop
 
 on: [push]
-jobs:
-  build-n-test:
-    runs-on: ubuntu-latest
-    env:
-      RAILS_ENV: test
 
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-          ruby-version: 3.1.2
-      - name: RuboCop
-        run: bundle exec rubocop
-      
-      - name: RSpec
-        run: bundle exec rspec
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '2.7.1'
+        bundler-cache: true
+    - name: Run Rubocop Linting
+      run: bundle exec rubocop
